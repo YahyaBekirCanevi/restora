@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:restora/components/custom_animated_button.dart';
 import 'package:restora/components/custom_text.dart';
 import 'package:restora/components/custom_text_box.dart';
+import 'package:restora/pages/home/home_page.dart';
 import 'package:restora/utils/colors.dart';
 
 class LoginPage extends StatelessWidget {
@@ -38,8 +39,8 @@ class LoginPage extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: const Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 20),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                       child: _Panel(),
                     ),
                   ),
@@ -63,11 +64,9 @@ class _Panel extends StatelessWidget {
     return Wrap(
       children: [
         Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
-            mainAxisAlignment:
-                MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const CustomText(
@@ -78,8 +77,7 @@ class _Panel extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  border: Border.all(
-                      color: kSecondaryColor, width: 0.8),
+                  border: Border.all(color: kSecondaryColor, width: 0.8),
                   shape: BoxShape.circle,
                 ),
                 child: const Padding(
@@ -95,8 +93,7 @@ class _Panel extends StatelessWidget {
             ],
           ),
         ),
-        const Divider(
-            thickness: 0.8, color: kSecondaryColor),
+        const Divider(thickness: 0.8, color: kSecondaryColor),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: CustomTextBox(
@@ -118,14 +115,20 @@ class _Panel extends StatelessWidget {
             obscureBool: true,
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: CustomHoverAnimatedButton(
             primaryColor: kSecondaryTintColor,
             borderRadious: 20,
             height: 50,
             secondaryColor: Colors.white,
             text: 'Save',
+            onTap: () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+              ),
+            ),
           ),
         ),
       ],
@@ -156,7 +159,10 @@ class _TopImage extends StatelessWidget {
           child: Center(
             child: Text(
               'Restora',
-              style: GoogleFonts.raleway().copyWith(color: Colors.white, fontSize: 44, fontWeight: FontWeight.w900),
+              style: GoogleFonts.raleway().copyWith(
+                  color: Colors.white,
+                  fontSize: 44,
+                  fontWeight: FontWeight.w900),
             ),
           ),
         ),
@@ -164,3 +170,4 @@ class _TopImage extends StatelessWidget {
     );
   }
 }
+
