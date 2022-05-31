@@ -26,25 +26,27 @@ class LoginPage extends StatelessWidget {
               ],
             ),
           ),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const _TopImage(),
-                  Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      color: Colors.white,
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const _TopImage(),
+                    Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        color: Colors.white,
+                      ),
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                        child: _Panel(),
+                      ),
                     ),
-                    child: const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                      child: _Panel(),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -126,7 +128,7 @@ class _Panel extends StatelessWidget {
             onTap: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => HomePage(),
+                builder: (context) => const HomePage(),
               ),
             ),
           ),
@@ -170,4 +172,3 @@ class _TopImage extends StatelessWidget {
     );
   }
 }
-

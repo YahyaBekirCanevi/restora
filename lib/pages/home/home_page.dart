@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:restora/data.dart';
 import 'package:restora/pages/login/login_page.dart';
 import 'package:restora/utils/colors.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -20,7 +21,9 @@ class _HomePageState extends State<HomePage> {
       initialScrollOffset: scrollPosition,
     );
     scrollController.addListener(() {
-      scrollPosition = scrollController.position.pixels;
+      setState(() {
+        scrollPosition = scrollController.position.pixels;
+      });
     });
     super.initState();
   }
@@ -32,8 +35,8 @@ class _HomePageState extends State<HomePage> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           toolbarHeight: 60,
-          backgroundColor: Colors.transparent,
-          elevation: scrollPosition != 0 ? 0 : 1,
+          backgroundColor: kSecondaryTintColor.withOpacity(0.2),
+          elevation: scrollPosition > 10 ? 1 : 0,
           title: Text(
             'Restora',
             style: GoogleFonts.raleway().copyWith(
@@ -49,6 +52,25 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+          actions: [
+            Center(
+              child: Container(
+                margin: const EdgeInsets.all(5),
+                width: 56,
+                height: 56,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.black.withOpacity(0.4),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -64,53 +86,100 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 const SizedBox(height: 60),
-                for (int i = 0; i < 10; i++)
-                  Container(
-                    height: 250,
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
+                Column(
+                  children: data.map((e) => UrunCard(model: e)).toList(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class UrunCard extends StatelessWidget {
+  final DataModel model;
+  const UrunCard({Key? key, required this.model}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 250,
+      margin: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+      ),
+      child: Stack(
+        children: [
+          Center(
+            child: ClipRRect(
+              clipBehavior: Clip.antiAlias,
+              child: Image.network(
+                model.imgUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 80,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.white.withOpacity(0.6), Colors.white],
+                ),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    model.name,
+                    style: GoogleFonts.arsenal(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
                     ),
-                    child: Stack(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Center(
-                          child: ClipRRect(
-                            child: Image.asset('assets/images/restora.png'),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          child: Container(
-                            height: 80,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [Colors.white.withOpacity(0.4), Colors.white],
+                        Row(
+                          children: [
+                            const Icon(Icons.star,
+                                size: 24, color: Colors.yellow),
+                            Text(
+                              model.star.toString(),
+                              style: GoogleFonts.arsenal(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                            child: Center(
-                              child: Text(
-                                'asd',
-                                style: GoogleFonts.arsenal(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                          ],
+                        ),
+                        Center(
+                          child: Text(
+                            model.location,
+                            style: GoogleFonts.arsenal(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
