@@ -107,19 +107,17 @@ class UrunCard extends StatelessWidget {
     return Container(
       height: 250,
       margin: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-      ),
       child: Stack(
         children: [
-          Center(
-            child: ClipRRect(
-              clipBehavior: Clip.antiAlias,
-              child: Image.network(
-                model.imgUrl,
-                fit: BoxFit.cover,
+          Container(
+            height: 250,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: NetworkImage(model.imgUrl),
               ),
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
             ),
           ),
           Positioned(
@@ -130,6 +128,10 @@ class UrunCard extends StatelessWidget {
               height: 80,
               width: double.infinity,
               decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
