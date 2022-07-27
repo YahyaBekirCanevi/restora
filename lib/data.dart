@@ -1,31 +1,31 @@
 var data = [
   DataModel(
     imgUrl:
-        'https://www.cumhuriyet.com.tr/Archive/2020/11/21/1792779/kapak_164013.jpg',
-    name: 'Bostan Pizza',
-    location: 'Eskişehir',
-    star: 4.6,
+        'https://b.zmtcdn.com/data/pictures/1/5915941/768d439eee9e1cf9f69fd85c7f8aa265_featured_v2.jpg?output-format=webp',
+    name: 'Lacivert Restaurant',
+    location: 'Anadolu Hisarı Merkez, İstanbul',
+    star: 4.4,
   ),
   DataModel(
     imgUrl:
-        'https://cdn.yemek.com/mncrop/940/625/uploads/2016/05/ev-yapimi-hamburger.jpg',
-    name: 'Crux Burger',
-    location: 'Eskişehir',
+        'https://b.zmtcdn.com/data/pictures/7/5904847/add338c21c3706fa163b529d47cf18e1_featured_v2.jpg?output-format=webp',
+    name: 'Firuzende Restaurant - Anemon Hotels',
+    location: 'Anemon Hotels, Galata, Beyoğlu, İstanbul',
+    star: 4.4,
+  ),
+  DataModel(
+    imgUrl:
+        'https://b.zmtcdn.com/data/pictures/5/5913675/4e198b40a3d6e829c1af3b01c0b2f95f_featured_v2.jpg',
+    name: 'Kız Kulesi Restaurant',
+    location: 'Salacak, İstanbul',
     star: 4.1,
   ),
   DataModel(
     imgUrl:
-        'https://img.piri.net/mnresize/900/-/resim/imagecrop/2020/09/01/10/40/resized_af100-e7e14fc1intro1584646886.jpg',
-    name: 'Görenler',
-    location: 'Eskişehir',
-    star: 4.3,
-  ),
-  DataModel(
-    imgUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnXQr26xrL2JKdPrsnjkcFMb3o0-ZL2XjTpQ&usqp=CAU',
-    name: 'Aksen Kahve',
-    location: 'Eskişehir',
-    star: 3.8,
+        'https://b.zmtcdn.com/data/pictures/chains/6/5905226/73e38751067bdb803a3efa15410f9cb8_featured_v2.jpg',
+    name: 'İnari Omakase Japanese Restaurant',
+    location: 'Kuruçeşme, İstanbul',
+    star: 4.8,
   ),
 ];
 

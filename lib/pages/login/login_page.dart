@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:restora/components/custom_animated_button.dart';
@@ -63,7 +64,7 @@ class _Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -124,7 +125,7 @@ class _Panel extends StatelessWidget {
             borderRadious: 20,
             height: 50,
             secondaryColor: Colors.white,
-            text: 'Save',
+            text: 'Login',
             onTap: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -147,15 +148,18 @@ class _TopImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const SizedBox(height: 180),
-        Center(
-          child: Image.asset(
-            'assets/images/restora.png',
-            height: 120,
+        Container(
+          height: 200,
+          decoration: const BoxDecoration(
+            color: Colors.transparent,
+            image: DecorationImage(
+              fit: BoxFit.fitHeight,
+              image: AssetImage('assets/images/restora.png'),
+            ),
           ),
         ),
         Positioned(
-          bottom: 20,
+          bottom: 0,
           left: 0,
           right: 0,
           child: Center(
