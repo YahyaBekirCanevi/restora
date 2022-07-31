@@ -8,9 +8,8 @@ class UrunCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 250,
-      margin: const EdgeInsets.all(10),
+    return Padding(
+      padding: const EdgeInsets.all(10),
       child: Stack(
         children: [
           Container(
@@ -33,53 +32,53 @@ class UrunCard extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
+                color: Colors.white.withOpacity(.8),
               ),
               child: Column(
                 children: [
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        model.name,
-                        maxLines: 1,
-                        style: GoogleFonts.arsenal(
-                          fontSize: 28,
-                          fontWeight: FontWeight.w500,
+                  Center(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          model.name,
+                          maxLines: 1,
+                          style: GoogleFonts.arsenal(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.star,
-                                size: 24, color: Colors.yellow),
-                            Text(
-                              model.star.toString(),
-                              style: GoogleFonts.arsenal(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
+                  Center(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(
+                        model.location,
+                        maxLines: 1,
+                        style: GoogleFonts.arsenal(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
                         ),
-                        Center(
-                          child: Text(
-                            model.location,
-                            style: GoogleFonts.arsenal(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.star, size: 24, color: Colors.yellow),
+                      Text(
+                        model.star.toString(),
+                        style: GoogleFonts.arsenal(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

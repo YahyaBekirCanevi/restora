@@ -4,12 +4,12 @@ import 'package:restora/pages/login/login_page.dart';
 import 'package:restora/utils/colors.dart';
 
 class HomeAppBar extends AppBar {
-  HomeAppBar({Key? key, context, scrollPosition})
+  HomeAppBar({Key? key, context})
       : super(
           key: key,
           toolbarHeight: 60,
           backgroundColor: kSecondaryTintColor.withOpacity(0.2),
-          elevation: scrollPosition > 10 ? 1 : 0,
+          elevation: 0,
           title: Text(
             'Restora',
             style: GoogleFonts.raleway().copyWith(
