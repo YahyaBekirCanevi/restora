@@ -1,178 +1,127 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:restora/components/custom_animated_button.dart';
 import 'package:restora/components/custom_text.dart';
 import 'package:restora/components/custom_text_box.dart';
+import 'package:restora/components/restora_image.dart';
 import 'package:restora/pages/home/home_page.dart';
 import 'package:restora/utils/colors.dart';
+import 'package:restora/utils/styles.dart';
 
-class LoginPage extends StatelessWidget {
+part 'panel.dart';
+part 'walk_trough.dart';
+
+enum PageType { walkTrough, signin, signup }
+
+class LoginPage extends HookWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  final _duration = const Duration(milliseconds: 600);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                kSecondaryColor,
-                kSecondaryTintColor.withOpacity(0.6),
-                kSecondaryColor,
-              ],
-            ),
-          ),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const _TopImage(),
-                    Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: Colors.white,
-                      ),
-                      child: const Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                        child: _Panel(),
-                      ),
-                    ),
-                  ],
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+    var pageType = useState(PageType.walkTrough);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        toolbarHeight: 70,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          child: Text(
+            "Restora",
+            style: GoogleFonts.akshar(
+              color: Colors.white,
+              fontSize: 34,
+              fontWeight: FontWeight.w600,
+              shadows: [
+                Shadow(
+                  offset: const Offset(2, 2),
+                  blurRadius: 8,
+                  color: Colors.black.withOpacity(.4),
                 ),
-              ),
+              ],
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class _Panel extends StatelessWidget {
-  const _Panel({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CustomText(
-                text: 'Welcome back,',
-                size: 30,
-                color: kSecondaryColor,
-                weight: FontWeight.w500,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: kSecondaryColor, width: 0.8),
-                  shape: BoxShape.circle,
+      body: Center(
+        child: Stack(
+          children: [
+            /// Background
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    kSecondaryTintColor.withOpacity(0.6),
+                    kSecondaryColor,
+                  ],
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(6),
-                  child: Center(
-                    child: Icon(
-                      Icons.call,
-                      color: kSecondaryColor,
-                    ),
+              ),
+              child: const SizedBox.expand(),
+            ),
+
+            /// Icon
+            AnimatedPositioned(
+              duration: _duration,
+              top: height * (pageType.value == PageType.walkTrough ? .24 : .04),
+              right: 0,
+              left: pageType.value == PageType.walkTrough ? 0 : width * .4,
+              child: Center(
+                child: RestoraImage(
+                  height: pageType.value == PageType.walkTrough ? 240 : 200,
+                ),
+              ),
+            ),
+
+            /// WalkTrough
+            Positioned(
+              bottom: 100,
+              right: 0,
+              left: 0,
+              child: AnimatedScale(
+                duration: _duration,
+                scale: pageType.value == PageType.walkTrough ? 1 : 0,
+                child: WalkTrough(
+                  onLogin: () => pageType.value = PageType.signin,
+                  onJoin: () => pageType.value = PageType.signup,
+                ),
+              ),
+            ),
+
+            /// Login / Sign Up
+            AnimatedPositioned(
+              duration: _duration,
+              bottom: 0,
+              right: 10,
+              left: 10,
+              top: height * (pageType.value == PageType.walkTrough ? 1 : .24),
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                  color: Colors.white,
+                ),
+                child: Center(
+                  child: _Panel(
+                    pageType: pageType.value,
+                    onClose: () => pageType.value = PageType.walkTrough,
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
-        const Divider(thickness: 0.8, color: kSecondaryColor),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: CustomTextBox(
-            borderColor: kGreyColor,
-            controller: TextEditingController(),
-            borderless: false,
-            decorationIcon: const Icon(Icons.person),
-            label: 'Username',
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: CustomTextBox(
-            borderColor: kGreyColor,
-            controller: TextEditingController(),
-            borderless: false,
-            decorationIcon: const Icon(Icons.person),
-            label: 'Password',
-            obscureBool: true,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: CustomHoverAnimatedButton(
-            primaryColor: kSecondaryTintColor,
-            borderRadious: 20,
-            height: 50,
-            secondaryColor: Colors.white,
-            text: 'Login',
-            onTap: () => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomePage(),
-              ),
             ),
-          ),
+          ],
         ),
-      ],
-    );
-  }
-}
-
-class _TopImage extends StatelessWidget {
-  const _TopImage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 200,
-          decoration: const BoxDecoration(
-            color: Colors.transparent,
-            image: DecorationImage(
-              fit: BoxFit.fitHeight,
-              image: AssetImage('assets/images/restora.png'),
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: Text(
-              'Restora',
-              style: GoogleFonts.raleway().copyWith(
-                  color: Colors.white,
-                  fontSize: 44,
-                  fontWeight: FontWeight.w900),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

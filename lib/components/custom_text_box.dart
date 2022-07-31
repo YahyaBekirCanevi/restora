@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class CustomTextBox extends StatefulWidget {
+class CustomTextBox extends HookWidget {
   final Widget? suffixWidget;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -41,69 +42,52 @@ class CustomTextBox extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CustomTextBox> createState() => _CustomTextBoxState();
-}
-
-class _CustomTextBoxState extends State<CustomTextBox> {
-  bool confirmObscured = false;
-
-  @override
-  void initState() {
-    confirmObscured = widget.obscureBool!;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var confirmObscured = useState(false);
+
     return TextFormField(
-      maxLength: widget.maxLength,
-      //autofocus: true,
-      //focusNode: FocusNode(),
-      inputFormatters: widget.digitsOnly
+      maxLength: maxLength,
+      inputFormatters: digitsOnly
           ? <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly]
           : null,
-      keyboardType: widget.keyboardType ?? TextInputType.multiline,
-      maxLines: widget.maxLines ?? 1,
-      minLines: widget.minLines,
-      controller: widget.controller,
-      readOnly: widget.readOnly!,
-      validator: widget.validator,
-      obscureText: confirmObscured,
-      onChanged: widget.onTextChanged,
+      keyboardType: keyboardType ?? TextInputType.multiline,
+      maxLines: maxLines ?? 1,
+      minLines: minLines,
+      controller: controller,
+      readOnly: readOnly!,
+      validator: validator,
+      obscureText: confirmObscured.value,
+      onChanged: onTextChanged,
       style: TextStyle(
-        color: widget.textColor ?? Colors.black,
+        color: textColor ?? Colors.black,
         fontFamily: 'Comfortaa',
-        fontSize: widget.customFontSize,
+        fontSize: customFontSize,
       ),
       decoration: InputDecoration(
         filled: true,
-        fillColor: widget.fillcolor ?? Colors.white,
-        prefixIcon: widget.decorationIcon,
-        suffixIcon: (widget.obscureBool!)
+        fillColor: fillcolor ?? Colors.white,
+        prefixIcon: decorationIcon,
+        suffixIcon: (obscureBool!)
             ? IconButton(
-          onPressed: () {
-            setState(() {
-              confirmObscured = !confirmObscured;
-            });
-          },
-          icon: confirmObscured
-              ? const Icon(Icons.visibility_off)
-              : const Icon(Icons.visibility),
-        )
-            : widget.suffixWidget,
-        labelText: widget.label,
+                onPressed: () => confirmObscured.value = !confirmObscured.value,
+                icon: confirmObscured.value
+                    ? const Icon(Icons.visibility_off)
+                    : const Icon(Icons.visibility),
+              )
+            : suffixWidget,
+        labelText: label,
         labelStyle: const TextStyle(
           fontFamily: 'Comfortaa',
           fontSize: 16,
           color: Colors.black,
           fontWeight: FontWeight.normal,
         ),
-        hintText: widget.hint,
-        border: !widget.borderless
+        hintText: hint,
+        border: !borderless
             ? OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: widget.borderColor!),
-        )
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: borderColor!),
+              )
             : null,
       ),
     );
