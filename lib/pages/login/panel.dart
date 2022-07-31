@@ -1,18 +1,19 @@
 part of 'login_page.dart';
 
-class _Panel extends HookWidget {
-  const _Panel({
+class Panel extends HookWidget {
+  const Panel({
     Key? key,
     required this.pageType,
+    required this.title,
     required this.onClose,
   }) : super(key: key);
 
   final PageType pageType;
+  final String title;
   final Function() onClose;
 
   @override
   Widget build(BuildContext context) {
-    if (pageType == PageType.walkTrough) return const SizedBox();
     return Column(
       children: [
         Padding(
@@ -27,9 +28,7 @@ class _Panel extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CustomText(
-                text: pageType == PageType.signin
-                    ? "Welcome back!"
-                    : "Come on in!",
+                text: title,
                 size: 30,
                 color: kSecondaryColor,
                 weight: FontWeight.w500,

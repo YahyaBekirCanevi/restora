@@ -23,6 +23,7 @@ class LoginPage extends HookWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    var title = useState("Welcome");
     var pageType = useState(PageType.walkTrough);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -90,8 +91,14 @@ class LoginPage extends HookWidget {
                 duration: _duration,
                 scale: pageType.value == PageType.walkTrough ? 1 : 0,
                 child: WalkTrough(
-                  onLogin: () => pageType.value = PageType.signin,
-                  onJoin: () => pageType.value = PageType.signup,
+                  onLogin: () {
+                    title.value = "Welcome back!";
+                    pageType.value = PageType.signin;
+                  },
+                  onJoin: () {
+                    title.value = "Come on in!";
+                    pageType.value = PageType.signup;
+                  },
                 ),
               ),
             ),
@@ -112,7 +119,8 @@ class LoginPage extends HookWidget {
                   color: Colors.white,
                 ),
                 child: Center(
-                  child: _Panel(
+                  child: Panel(
+                    title: title.value,
                     pageType: pageType.value,
                     onClose: () => pageType.value = PageType.walkTrough,
                   ),
