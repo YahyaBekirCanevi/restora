@@ -16,7 +16,9 @@ class WalkTrough extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              //await FirebaseAuth.instance.sign
+            },
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(

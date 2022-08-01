@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:restora/utils/colors.dart';
 
 class CustomTextBox extends HookWidget {
   final Widget? suffixWidget;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
-  final String? label, hint;
+  final String? label;
   final Icon? decorationIcon;
   final bool? obscureBool, readOnly;
   final bool borderless;
@@ -20,7 +21,6 @@ class CustomTextBox extends HookWidget {
   const CustomTextBox({
     Key? key,
     this.label,
-    this.hint,
     this.decorationIcon,
     this.obscureBool = false,
     this.readOnly = false,
@@ -28,10 +28,10 @@ class CustomTextBox extends HookWidget {
     this.onTextChanged,
     this.controller,
     this.borderless = false,
-    this.customFontSize = 16,
+    this.customFontSize = 18,
     this.textColor,
     this.fillcolor,
-    this.focusColor,
+    this.focusColor = kSecondaryTintColor,
     this.borderColor = Colors.black,
     this.suffixWidget = const SizedBox(),
     this.maxLines,
@@ -63,6 +63,7 @@ class CustomTextBox extends HookWidget {
         fontFamily: 'Comfortaa',
         fontSize: customFontSize,
       ),
+      cursorColor: focusColor,
       decoration: InputDecoration(
         filled: true,
         fillColor: fillcolor ?? Colors.white,
@@ -76,17 +77,16 @@ class CustomTextBox extends HookWidget {
               )
             : suffixWidget,
         labelText: label,
-        labelStyle: const TextStyle(
-          fontFamily: 'Comfortaa',
-          fontSize: 16,
-          color: Colors.black,
-          fontWeight: FontWeight.normal,
-        ),
-        hintText: hint,
         border: !borderless
             ? OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: borderColor!),
+              )
+            : null,
+        focusedBorder: !borderless
+            ? OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: focusColor!),
               )
             : null,
       ),
