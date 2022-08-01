@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,6 +26,8 @@ class LoginPage extends HookWidget {
     var width = MediaQuery.of(context).size.width;
     var title = useState("Welcome");
     var pageType = useState(PageType.walkTrough);
+    var panelShown = useState(false);
+
     return Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
@@ -72,12 +75,12 @@ class LoginPage extends HookWidget {
             /// Icon
             AnimatedPositioned(
               duration: _duration,
-              top: height * (pageType.value == PageType.walkTrough ? .24 : .04),
+              top: height * (panelShown.value ? .04 : .24),
               right: 0,
-              left: pageType.value == PageType.walkTrough ? 0 : width * .4,
+              left: panelShown.value ? width * .4 : 0,
               child: Center(
                 child: RestoraImage(
-                  height: pageType.value == PageType.walkTrough ? 240 : 200,
+                  height: panelShown.value ? 200 : 240,
                 ),
               ),
             ),
@@ -118,11 +121,18 @@ class LoginPage extends HookWidget {
                   ),
                   color: Colors.white,
                 ),
-                child: Center(
-                  child: Panel(
-                    title: title.value,
-                    pageType: pageType.value,
-                    onClose: () => pageType.value = PageType.walkTrough,
+                child: AnimatedOpacity(
+                  duration: _duration,
+                  opacity: pageType.value != PageType.walkTrough ? 1 : 0,
+                  onEnd: () =>
+                      panelShown.value = pageType.value != PageType.walkTrough,
+                  child: Visibility(
+                    visible: panelShown.value,
+                    child: Panel(
+                      title: title.value,
+                      pageType: pageType.value,
+                      onClose: () => pageType.value = PageType.walkTrough,
+                    ),
                   ),
                 ),
               ),
