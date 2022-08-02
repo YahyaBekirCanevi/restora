@@ -20,7 +20,7 @@ class Application extends StatelessWidget {
     return MaterialApp(
       key: key,
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: const FirebaseConfig(),
       theme: Theme.of(context).copyWith(
         primaryIconTheme: const IconThemeData(color: kSecondaryTintColor),
         primaryColor: kSecondaryTintColor,
