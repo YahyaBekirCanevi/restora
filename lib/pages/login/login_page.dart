@@ -127,7 +127,8 @@ class LoginPage extends HookWidget {
                   onEnd: () =>
                       panelShown.value = pageType.value != PageType.walkTrough,
                   child: Visibility(
-                    visible: panelShown.value,
+                    visible: pageType.value != PageType.walkTrough ||
+                        panelShown.value,
                     child: Panel(
                       title: title.value,
                       pageType: pageType.value,

@@ -9,7 +9,7 @@ class CustomTextBox extends HookWidget {
   final String? Function(String?)? validator;
   final String? label;
   final Icon? decorationIcon;
-  final bool? obscureBool, readOnly;
+  final bool obscureBool, readOnly;
   final bool borderless;
   final void Function(String)? onTextChanged;
   final double customFontSize;
@@ -43,7 +43,7 @@ class CustomTextBox extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var confirmObscured = useState(false);
+    var confirmObscured = useState<bool>(obscureBool);
 
     return TextFormField(
       maxLength: maxLength,
@@ -54,7 +54,7 @@ class CustomTextBox extends HookWidget {
       maxLines: maxLines ?? 1,
       minLines: minLines,
       controller: controller,
-      readOnly: readOnly!,
+      readOnly: readOnly,
       validator: validator,
       obscureText: confirmObscured.value,
       onChanged: onTextChanged,
@@ -68,7 +68,7 @@ class CustomTextBox extends HookWidget {
         filled: true,
         fillColor: fillcolor ?? Colors.white,
         prefixIcon: decorationIcon,
-        suffixIcon: (obscureBool!)
+        suffixIcon: (obscureBool)
             ? IconButton(
                 onPressed: () => confirmObscured.value = !confirmObscured.value,
                 icon: confirmObscured.value
